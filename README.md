@@ -1,5 +1,5 @@
 # alloy
-Go to (if you just read goto you are a basic programmer, go away !) Rust calls with Apache Arrow datatype as parameter
+Go to (if you just read goto you are a Basic programmer, go away !) Rust calls with Apache Arrow datatype as parameter
 Super mega experimental atm ... Currently reading specs https://arrow.apache.org/docs/status.html#ipc-format
 
 Goals
