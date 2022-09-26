@@ -1,10 +1,12 @@
 # Alloy
 Go --> Rust calls with Apache Arrow datatype's as parameter
-Super mega experimental atm ... Currently reading specs https://arrow.apache.org/docs/status.html#ipc-format
 
-Use the script from https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO 
+Under early setup at atm reading these as inspiration.
+*  https://github.com/mediremi/rust-plus-golang 
+* https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
+* https://arrow.apache.org/docs/status.html#ipc-format
 
-
+ 
 Goals
 
 ## V0 Either using C-api or IPC
