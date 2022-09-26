@@ -8,7 +8,8 @@ Under early setup at atm reading these as inspiration.
 * https://arrow.apache.org/docs/status.html#ipc-format
 
 You need Go/Rust and build tools installed. Try  
-prompt> make build-all
+
+**prompt> make build-all**
 
 it currently fails ..help me fix it..
 
