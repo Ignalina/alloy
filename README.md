@@ -7,7 +7,7 @@ Under early setup at atm reading these as inspiration.
 * https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
 * https://arrow.apache.org/docs/status.html#ipc-format
 
-You need Go/Rust and build tools installed. Try
+You need Go/Rust and build tools installed. Try  
 prompt> make build-all
 
 it currently fails ..help me fix it..
