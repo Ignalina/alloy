@@ -1,7 +1,6 @@
 ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-
-build-all: build-rust, build-go
+build-all: build-rust build-go
 
 
 .PHONY: build-rust
