@@ -2,17 +2,17 @@ package api
 
 import (
 	"fmt"
-	"github.com/apache/arrow/go/arrow"
-	"github.com/apache/arrow/go/arrow/memory"
+	"github.com/apache/arrow/go/v9/arrow"
+	"github.com/apache/arrow/go/v9/arrow/memory"
 )
 
 /*
 
-#cgo LDFLAGS: ../lib/libimpl.a -ldl
+#cgo LDFLAGS: -L../lib/libimpl.a -ldl
 #include "../lib/impl.h"
 
 
-#include "ARROW_C_DATA_INTERFACE.c"
+#include "ARROW_C_DATA_INTERFACE.h"
 
 //extern int callwithtable(ArrowSchema* schema);
 

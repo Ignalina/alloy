@@ -9,6 +9,6 @@ build-rust:
 
 .PHONY: build-go
 build-go:
-	go build alloy
+	go build ./...
 
 

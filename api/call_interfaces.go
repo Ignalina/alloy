@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/apache/arrow/go/arrow"
-	"github.com/apache/arrow/go/arrow/array"
+	"github.com/apache/arrow/go/v9/arrow"
+	"github.com/apache/arrow/go/v9/arrow/array"
 )
 
 // Other side can dynamically/runtime construct an Table
