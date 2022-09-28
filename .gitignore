@@ -15,4 +15,9 @@
 .idea
 
 # Rust build directory
+debug/
 target/
+
+# Library of functions and headers referenced by C/C++ source
+*.a
+
