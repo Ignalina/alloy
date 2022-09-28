@@ -1,6 +1,7 @@
 [package]
 name = "impl"
 version = "0.1.0"
+edition = "2021"
 
 [lib]
 # If you only wanted dynamic library, you'd use only "cdylib".
