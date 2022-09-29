@@ -17,7 +17,7 @@ func TestHelloName(t *testing.T) {
 	)
 
 	goBridge := GoBridge{GoAllocator: memory.NewGoAllocator()}
-	err := goBridge.CallWithTable(schema)
+	err := goBridge.Call(schema)
 
 	if err != nil {
 		t.Fatalf(`CallWithTable(nil) = %q `, err)

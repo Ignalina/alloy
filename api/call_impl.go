@@ -7,15 +7,9 @@ import (
 )
 
 /*
-
 #cgo LDFLAGS: -L../lib/libimpl.a -ldl
 #include "../lib/impl.h"
-
-
 #include "ARROW_C_DATA_INTERFACE.h"
-
-//extern int callwithtable(ArrowSchema* schema);
-
 */
 import (
 	"C"
@@ -26,7 +20,7 @@ type GoBridge struct {
 }
 
 // TODO add columns via arrays arrays
-func (goBridge GoBridge) CallWithTable(schema *arrow.Schema) error {
+func (goBridge GoBridge) Call(schema *arrow.Schema) error {
 	C.callwithtable(schema)
 	fmt.Printf("hi")
 	return nil

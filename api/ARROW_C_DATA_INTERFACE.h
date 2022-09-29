@@ -5,7 +5,7 @@
 #define ARROW_FLAG_NULLABLE 2
 #define ARROW_FLAG_MAP_KEYS_SORTED 4
 
-struct ArrowSchema {
+extern struct ArrowSchema {
   // Array type description
   const char* format;
   const char* name;
