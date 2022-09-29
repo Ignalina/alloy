@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '''$HOME/.cargo/env
+        sh '''export PATH=$PATH:/usr/local/go/bin
+$HOME/.cargo/env
+go version
 make
 '''
       }
