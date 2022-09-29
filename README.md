@@ -5,7 +5,8 @@ Go (Arrow buffs)--> Rust
 calls with Apache Arrow datatype's as parameter
 
 Under early setup at atm reading these as inspiration.
-*  https://github.com/mediremi/rust-plus-golang 
+* https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
+* https://github.com/mediremi/rust-plus-golang 
 * https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
 * https://arrow.apache.org/docs/status.html#ipc-format
 * https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
