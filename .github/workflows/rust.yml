@@ -17,5 +17,5 @@ jobs:
     - name: Build
       run: cd lib/impl && cargo build --release --verbose
     - name: Tests
-      run: cargo test --verbose
+      run: cd lib/impl && cargo test --verbose
 
