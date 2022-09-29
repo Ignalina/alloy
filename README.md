@@ -1,4 +1,6 @@
 # Alloy
+![Rust build][(https://github.com/Ignalina/alloy/actions/workflows/rust.yml/badge.svg)
+
 Go (Arrow buffs)--> Rust 
 calls with Apache Arrow datatype's as parameter
 
