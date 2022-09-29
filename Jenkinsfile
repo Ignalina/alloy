@@ -4,9 +4,8 @@ pipeline {
     stage('build') {
       steps {
         sh '''whoami
-export PATH=/usr/local/go/bin:$PATH
-ls -l  /var/lib/jenkins/.cargo
-sh /var/lib/jenkins/.cargo/env
+export PATH=$PATH:/usr/local/go/bin
+source "$HOME/.cargo/env"
 go version
 make
 '''
