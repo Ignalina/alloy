@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '''make
+        sh '''$HOME/.cargo/env
+make
 '''
       }
     }
