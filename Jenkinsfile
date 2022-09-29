@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh '''whoami
 export PATH=$PATH:/usr/local/go/bin
-sh "$HOME/.cargo/env"
+#sh "$HOME/.cargo/env"
 go version
 make
 '''
