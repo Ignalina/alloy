@@ -2,6 +2,8 @@ package api
 
 import (
 	"fmt"
+    "github.com/apache/arrow/go/v9/arrow"
+    "github.com/apache/arrow/go/v9/arrow/memory"
 )
 
 /*
@@ -10,6 +12,10 @@ import (
 #include "ARROW_C_DATA_INTERFACE.h"
 */
 import "C"
+
+type GoBridge struct {
+    GoAllocator *memory.GoAllocator
+}
 
 /*
 
@@ -21,12 +27,17 @@ Is the arrow Schema that type? probably not.,
 But we can create a reference to the C typedef
 struct ArrowSchema and pass that to our function
 and everyone is happy!
-I dont know how to test this though? only how to 
-build it haha
 */
 func main() {
     arrowschema := &C.ArrowSchema{}
     C.callwithschema(arrowschema)
     fmt.Printf("Hello from Go!")
+}
+
+func (goBridge GoBridge) Call(schema* arrow.Schema) error {
+    arrowschema := &C.ArrowSchema{}
+    C.callwithschema(arrowschema)
+    fmt.Printf("Hello from Go!")
+    return nil
 }
 
