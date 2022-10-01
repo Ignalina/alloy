@@ -5,7 +5,7 @@
 #define ARROW_FLAG_NULLABLE 2
 #define ARROW_FLAG_MAP_KEYS_SORTED 4
 
-extern struct ArrowSchema {
+typedef struct {
   // Array type description
   const char* format;
   const char* name;
@@ -19,9 +19,9 @@ extern struct ArrowSchema {
   void (*release)(struct ArrowSchema*);
   // Opaque producer-specific data
   void* private_data;
-};
+} ArrowSchema;
 
-struct ArrowArray {
+typedef struct {
   // Array data description
   int64_t length;
   int64_t null_count;
@@ -36,6 +36,6 @@ struct ArrowArray {
   void (*release)(struct ArrowArray*);
   // Opaque producer-specific data
   void* private_data;
-};
+} ArrowArray;
 
 #endif  // ARROW_C_DATA_INTERFACE

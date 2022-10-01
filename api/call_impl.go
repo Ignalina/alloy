@@ -2,8 +2,6 @@ package api
 
 import (
 	"fmt"
-	"github.com/apache/arrow/go/v9/arrow"
-	"github.com/apache/arrow/go/v9/arrow/memory"
 )
 
 /*
@@ -11,17 +9,24 @@ import (
 #include "../lib/impl.h"
 #include "ARROW_C_DATA_INTERFACE.h"
 */
-import (
-	"C"
-)
+import "C"
 
-type GoBridge struct {
-	GoAllocator *memory.GoAllocator
+/*
+
+The callwithtable func wants the following type 
+as argument:
+    *_Ctype_struct___0
+
+Is the arrow Schema that type? probably not.,
+But we can create a reference to the C typedef
+struct ArrowSchema and pass that to our function
+and everyone is happy!
+I dont know how to test this though? only how to 
+build it haha
+*/
+func main() {
+    arrowschema := &C.ArrowSchema{}
+    C.callwithschema(arrowschema)
+    fmt.Printf("Hello from Go!")
 }
 
-// TODO add columns via arrays arrays
-func (goBridge GoBridge) Call(schema *arrow.Schema) error {
-	C.callwithtable(schema)
-	fmt.Printf("hi")
-	return nil
-}
