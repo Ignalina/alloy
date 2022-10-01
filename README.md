@@ -14,7 +14,7 @@ Under early setup at atm reading these as inspiration.
 
 ## Setup
 If you are on a a debian based Linux system, you can very easily install the tools
-needed to install Rust and similar tools, simply do this with the following command
+needed to install Rust and similar tools, simply do this with the following command.
 ``` 
 $ sudo apt-get install build-essential
 ```
@@ -36,7 +36,7 @@ $ export GOROOT=/usr/local/go
 $ export GOPATH=$HOME/go
 $ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 ```
-now you can verify that the Go compiler is installed properly by checking its version
+now you can verify that the Go compiler is installed properly by checking its version.
 ```
 $ go version
 ``` 
@@ -46,7 +46,7 @@ Next step is to install Rust. Perhaps a bit counter-intuitive, but this is a lot
 easier than the Go install. Simply go to this page https://rustup.rs/ and follow the
 guide on screen. It will install the Rust toolchain which constitutes of; the Rust
 compiler and the Cargo package manager. Or if you just want the command to run the
-install, this is it
+install, this is it.
 ```
 $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
@@ -56,12 +56,16 @@ $ cargo version
 ```
 
 
-In theory, you could now make and run the examples in this repo; but they are
+and in theory, you could now make and run the examples in this repo; but it is
 currently failing. We are looking into this.
 ```
 $ make build-all
 ...
 ``` 
+
+## Requirements
+- Apache Arrow v9.0.0 https://arrow.apache.org/install/
+- ...
 
 ## Goals
 
