@@ -1,6 +1,8 @@
 # Alloy
 ![Rust build](https://github.com/Ignalina/alloy/actions/workflows/rust-build.yml/badge.svg)
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
+![Go build](https://github.com/Ignalina/alloy/actions/workflows/go-build.yml/badge.svg)
+![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
 
 Go (Arrow buffs)--> Rust 
 calls with Apache Arrow datatype's as parameter
