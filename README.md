@@ -67,7 +67,7 @@ $ make build-all
 
 ## Requirements
 - Apache Arrow v9.0.0 https://arrow.apache.org/install/
-- ...
+- Go v1.19.1 https://go.dev/dl/ 
 
 ## Goals
 
