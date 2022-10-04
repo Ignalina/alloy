@@ -4,7 +4,14 @@ import (
 	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/memory"
 	"testing"
+	"C"
 )
+/*
+#cgo LDFLAGS: -L../lib/libimpl.a -ldl
+#include "../lib/impl.h"
+#include "ARROW_C_DATA_INTERFACE.h"
+*/
+
 
 func TestHelloName(t *testing.T) {
 
