@@ -1,21 +1,14 @@
-use arrow::ffi::{FFI_ArrowSchema, FFI_ArrowArray};
-use arrow::array::make_array_from_raw;
+use arrow::ffi::{FFI_ArrowArray, ArrowArray};
+use arrow::array::{Int32Array, Array, make_array_from_raw};
 use libc::c_int;
 
 #[no_mangle]
-pub extern "C" fn call_with_ffi(
-    ffi_array: *const FFI_ArrowArray,
-    ffi_schema: *const FFI_ArrowSchema
-    ) -> c_int {
+pub extern "C" fn call_with_ffi(ffi_array: &mut ArrowArray) -> c_int {
+    
+    let (arr_ptr, sch_ptr) = ArrowArray::into_raw(unsafe { ArrowArray::empty() });
+    let array = unsafe { make_array_from_raw(arr_ptr, sch_ptr) };
 
-    unsafe {
-        let _array_ref = match make_array_from_raw(ffi_array, ffi_schema) {
-            Ok(a) => a,
-            Err(arrow_error) => panic!("Could not make_array_from_raw, {:?}", arrow_error),
-        };
-
-        println!("Hello from Rust, with Arrow ArrayRef.");
-    }
+    println!("Hello from Rust, with Arrow Array: {:?}", array);
 
     1 as c_int
 }
