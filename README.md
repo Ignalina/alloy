@@ -1,7 +1,6 @@
 ![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.png)<br>
-![Rust build](https://github.com/Ignalina/alloy/actions/workflows/rust-build.yml/badge.svg)
+![Builds](https://github.com/Ignalina/alloy/actions/workflows/builds.yml/badge.svg)
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
-![Go build](https://github.com/Ignalina/alloy/actions/workflows/go-build.yml/badge.svg)
 ![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
 ---
 
@@ -59,11 +58,11 @@ $ cargo version
 ```
 
 
-and in theory, you could now make and run the examples in this repo; but it is
-currently failing. We are looking into this.
+and in theory, you could now make and run the examples in the repo. As for now, all
+builds and tests are passing. But the implemented example in `testapp.go` is causing a
+kernel panic in Rust because we are sending an empty Array to the function.
 ```
 $ make build-all
-...
 ``` 
 
 ## Requirements
