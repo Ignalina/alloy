@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/apache/arrow/go/v9/arrow"
+	"github.com/apache/arrow/go/v9/arrow/array"
 	"github.com/apache/arrow/go/v9/arrow/memory"
 )
 
@@ -17,22 +18,12 @@ type GoBridge struct {
 	GoAllocator *memory.GoAllocator
 }
 
-/*
-The callwithtable func wants the following type
-as argument:
-
-	*_Ctype_struct___0
-
-Is the arrow Schema that type? probably not.,
-But we can create a reference to the C typedef
-struct ArrowSchema and pass that to our function
-and everyone is happy!
-*/
-
-func (goBridge GoBridge) Call(schema *arrow.Schema) error {
+func (goBridge GoBridge) Call(arr *array.Int32, schema *arrow.Schema) error {
+    fmt.Printf("Hello from Go! Calling Rust through C ffi now...")
     arrow_array := &C.ArrowArray{}
 	arrow_schema := &C.ArrowSchema{}
 	C.call_with_ffi(arrow_array, arrow_schema)
-	fmt.Printf("Hello from Go!")
+	fmt.Printf("Hello from Go, again! I am done now.")
 	return nil
 }
+
