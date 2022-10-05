@@ -1,7 +1,6 @@
-use libc::c_int;
 use arrow::ffi::{FFI_ArrowSchema, FFI_ArrowArray};
-use arrow::array::{ArrayRef, make_array_from_raw};
-use arrow::error::{ArrowError};
+use arrow::array::make_array_from_raw;
+use libc::c_int;
 
 #[no_mangle]
 pub extern "C" fn call_with_ffi(
@@ -10,9 +9,9 @@ pub extern "C" fn call_with_ffi(
     ) -> c_int {
 
     unsafe {
-        let array_ref = match make_array_from_raw(ffi_array, ffi_schema) {
+        let _array_ref = match make_array_from_raw(ffi_array, ffi_schema) {
             Ok(a) => a,
-            Err(ArrowError) => panic!("Could not make_array_from_raw, {:?}", ArrowError),
+            Err(arrow_error) => panic!("Could not make_array_from_raw, {:?}", arrow_error),
         };
 
         println!("Hello from Rust, with Arrow ArrayRef.");
