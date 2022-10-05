@@ -4,6 +4,6 @@ build-all:
 	go build ./...
 
 clean:
-	rm lib/libimpl.a || rm -rf lib/impl/target/
+	rm lib/libimpl.a || rm -rf lib/impl/target
 	go clean
 
