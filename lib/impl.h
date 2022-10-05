@@ -2,4 +2,4 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "../ARROW_C_DATA_INTERFACE.h"
-void callwithschema(ArrowSchema* schema);
+void call_with_ffi(ArrowArray* array, ArrowSchema* schema);

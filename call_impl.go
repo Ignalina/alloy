@@ -7,7 +7,7 @@ import (
 )
 
 /*
-#cgo LDFLAGS: ./lib/libimpl.a -ldl
+#cgo LDFLAGS: ./lib/libimpl.a -ldl -lm
 #include "./lib/impl.h"
 #include "./ARROW_C_DATA_INTERFACE.h"
 */
@@ -30,8 +30,9 @@ and everyone is happy!
 */
 
 func (goBridge GoBridge) Call(schema *arrow.Schema) error {
-	arrowschema := &C.ArrowSchema{}
-	C.callwithschema(arrowschema)
+    arrow_array := &C.ArrowArray{}
+	arrow_schema := &C.ArrowSchema{}
+	C.call_with_ffi(arrow_array, arrow_schema)
 	fmt.Printf("Hello from Go!")
 	return nil
 }
