@@ -1,6 +1,12 @@
 
 build-all: build-rust build-go
 
+.PHONY: clean
+clean:
+	@cd lib/impl && rm -rf target
+	go clean
+
+
 
 .PHONY: build-rust
 build-rust:
