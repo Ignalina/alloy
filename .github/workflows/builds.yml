@@ -1,0 +1,30 @@
+name: Builds
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env: 
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-rust:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout/@v2
+    - name: Rust build
+      run: cd lib/impl && cargo build --release --verbose && cd ../..
+
+  build-go:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout/@v3
+    - uses: actions/setup-go@v3
+      with:
+        go-version: '>=1.19.1'
+        check-latest: false
+    - name: Go build
+      run: go build -v ./...
+
