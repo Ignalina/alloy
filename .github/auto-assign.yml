@@ -8,7 +8,6 @@ addAssignees: author
 reviewers:
   - ignalina
   - willeagren
-  - octocat
 
 # A number of reviewers added to the PR
 # Set 0 to add all the reviewers (default: 0)
@@ -18,7 +17,6 @@ numberOfReviewers: 1
 assignees:
   - ignalina
   - willeagren
-  - octocat
 
 # A number of assignees to add to the PRs
 # Set to 0 to add all of the assignees.
