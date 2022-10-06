@@ -1,9 +1,10 @@
 build-all:
-	cd lib/impl && cargo build --release
-	cp lib/impl/target/release/libimpl.a lib/
+	cd ./ffi/ && cargo build --release
+	cp ./ffi/target/release/librust_impl.a ./ffi/
 	go build ./...
 
 clean:
-	rm lib/libimpl.a || rm -rf lib/impl/target
+	rm -f ffi/libimpl.a && rm -rf ./ffi/target
+	rm -f alloy
 	go clean
 
