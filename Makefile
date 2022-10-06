@@ -5,5 +5,6 @@ build-all:
 
 clean:
 	rm -f ffi/libimpl.a && rm -rf ./ffi/target
+	rm -f alloy
 	go clean
 
