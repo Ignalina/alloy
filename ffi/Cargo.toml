@@ -12,5 +12,5 @@ crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 libc = "0.2.2"
-arrow2 = "0.14.2"
+arrow = "9.1.0"
 
