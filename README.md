@@ -13,6 +13,8 @@ Under early setup at atm reading these as inspiration.
 * https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
 * https://arrow.apache.org/docs/status.html#ipc-format
 * https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
+* https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo
+  some information regarding C structs in Go
 
 ## Setup
 If you are on a a debian based Linux system, you can very easily install the tools
