@@ -17,7 +17,9 @@ func main() {
     defer arr.Release()
 
     sch := arrow.NewSchema(
-        []arrow.Field{{Name: "f1-i32", Type: arrow.PrimitiveTypes.Int32},},
+        []arrow.Field{
+            {Name: "f1-i32", Type: arrow.PrimitiveTypes.Int32},
+            {Name: "f2-i32", Type: arrow.PrimitiveTypes.Int32}},
         nil,
     )
 
