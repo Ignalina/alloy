@@ -2,30 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/array"
 	"github.com/apache/arrow/go/v9/arrow/memory"
-	arrow2 "github.com/ignalina/alloy/cdata"
+	"github.com/ignalina/alloy/cdata"
 )
 
 func main() {
 	mem := memory.NewGoAllocator()
 
-	builder := array.NewInt32Builder(mem)
-	builder.AppendValues([]int32{122}, nil)
-
-	arr := builder.NewInt32Array()
+	bld := array.NewInt32Builder(mem)
+	defer bld.Release()
+	bld.AppendValues([]int32{122}, nil)
+	arr := bld.NewInt32Array() // materialize the array
 	defer arr.Release()
 
-	sch := arrow.NewSchema(
-		[]arrow.Field{
-			{Name: "f1-i32", Type: arrow.PrimitiveTypes.Int32},
-			{Name: "f2-i32", Type: arrow.PrimitiveTypes.Int32}},
-		nil,
-	)
-
-	fmt.Printf("Calling the goBridge with:\narray=%v\nschema=%v\n", arr, sch)
-	goBridge := arrow2.GoBridge{GoAllocator: mem}
-	err := goBridge.Call(arr, sch)
+	fmt.Printf("Calling the goBridge with:\narray=%v\n", arr)
+	goBridge := cdata.GoBridge{GoAllocator: mem}
+	err := goBridge.Call(arr)
 	fmt.Println(err)
 }

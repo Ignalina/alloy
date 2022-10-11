@@ -2,7 +2,6 @@ package cdata
 
 import (
 	"fmt"
-	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/array"
 	"github.com/apache/arrow/go/v9/arrow/cdata"
 	"github.com/apache/arrow/go/v9/arrow/memory"
@@ -12,9 +11,10 @@ import (
 /*
 #cgo LDFLAGS: ./ffi/librust_impl.a -ldl -lm
 #include "arrow/c/abi.h"
-void ffi_call_schema(struct ArrowSchema* schema);
-void ffi_call_schema_voidptr(void* schema) {
-ffi_call_schema(schema);
+
+void call_with_ffi(struct ArrowSchema* schema,struct ArrowArray* array);
+void call_with_ffi_voidptr(void* schema,void* array) {
+call_with_ffi(schema,array);
 }
 
 */
@@ -24,21 +24,17 @@ type GoBridge struct {
 	GoAllocator *memory.GoAllocator
 }
 
-func (goBridge GoBridge) Call(array *array.Int32, schema *arrow.Schema) error {
+func (goBridge GoBridge) Call(array *array.Int32) error {
 	fmt.Printf("Hello from Go! Calling Rust through C ffi now...\n")
 
-	//arrow_array := C.dummy_arrow_array()
-	//arrow_schema := C.dummy_arrow_schema()
+	cas := &cdata.CArrowSchema{}
+	caa := &cdata.CArrowArray{}
+	cdata.ExportArrowArray(array, caa, cas)
 
-	ll := &cdata.CArrowSchema{}
-	cdata.ExportArrowSchema(schema, ll)
+	fmt.Printf("You can do it , go Rust land !\n")
 
-	fmt.Printf("=======================\n")
+	C.call_with_ffi_voidptr(unsafe.Pointer(cas), unsafe.Pointer(caa))
 
-	// C.call_with_ffi(arrow_array, Csch)
-
-	C.ffi_call_schema_voidptr(unsafe.Pointer(ll))
-
-	fmt.Printf("Hello from Go, again! Successfully sent Arrow data to Rust.\n")
+	fmt.Printf("Hello0 from Go, again! Successfully sent Arrow data to Rust.\n")
 	return nil
 }
