@@ -12,7 +12,7 @@ func main() {
 
 	bld := array.NewInt32Builder(mem)
 	defer bld.Release()
-	bld.AppendValues([]int32{122}, nil)
+	bld.AppendValues([]int32{122}, []bool{false})
 	arr := bld.NewInt32Array() // materialize the array
 	defer arr.Release()
 
