@@ -30,7 +30,7 @@ func exportArrowSchema(schema *arrow.Schema, out *C.struct_ArrowSchema) {
 }
 
 func (goBridge GoBridge) Call(array *array.Int32, schema *arrow.Schema) error {
-    fmt.Printf("Hello from Go! Calling Rust through C ffi now...\n")
+    fmt.Printf("[Go]\tHello! Calling Rust through C ffi now...\n")
 
     arrow_schema := &C.struct_ArrowSchema{}
 
@@ -38,6 +38,6 @@ func (goBridge GoBridge) Call(array *array.Int32, schema *arrow.Schema) error {
 
     ret := C.call_with_ffi_schema(arrow_schema)
 
-    fmt.Printf("Hello from Go! Successfully called Rust with Arrow parameter. ret=%v.\n", ret)
+    fmt.Printf("[Go]\tHello! Successfully called Rust with Arrow parameter. ret=%v.\n", ret)
     return nil
 }

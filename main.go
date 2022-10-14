@@ -21,7 +21,6 @@ func main() {
         nil,
     )
 
-    fmt.Printf("Calling the goBridge with:\narray=%v\nschema=%v\n", arr, sch)
     goBridge := GoBridge{GoAllocator: mem}
     err := goBridge.Call(arr, sch)
     fmt.Println(err)
