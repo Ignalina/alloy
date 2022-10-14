@@ -1,4 +1,4 @@
-#include <stdlib.h>
 #include "../ARROW_C_DATA_INTERFACE.h"
-void call_with_ffi(ArrowArray* array, ArrowSchema* schema);
+// int call_with_ffi(struct ArrowArray* array, struct ArrowSchema* schema);
+struct ArrowSchema* call_with_ffi_schema(struct ArrowSchema* schema);
 

@@ -10,23 +10,6 @@ import (
 /*
 #cgo LDFLAGS: ./ffi/librust_impl.a -ldl -lm
 #include "./ffi/impl.h"
-
-ArrowArray* dummy_arrow_array() {
-    ArrowArray* arr = (ArrowArray*)malloc(sizeof(ArrowArray));
-
-    return arr;
-}
-
-ArrowSchema* dummy_arrow_schema() {
-    ArrowSchema* sch = (ArrowSchema*)malloc(sizeof(ArrowSchema));
-    
-    sch->format = "F1-i32";
-    sch->name = "Testname";
-    sch->metadata = "Testmetadata";
-
-    return sch;
-
-}
 */
 import "C"
 
@@ -34,29 +17,27 @@ type GoBridge struct {
     GoAllocator *memory.GoAllocator
 }
 
+func exportArrowSchema(schema *arrow.Schema, out *C.struct_ArrowSchema) {
+    field := schema.Fields()[0]
+    out.dictionary = nil
+    out.name = C.CString(field.Name)
+    out.format = C.CString("i")
+    out.metadata = (*C.char)(nil)
+    out.flags = C.int64_t(0)
+    out.n_children = C.int64_t(0)
+
+    out.children = nil
+}
+
 func (goBridge GoBridge) Call(array *array.Int32, schema *arrow.Schema) error {
-    fmt.Printf("Hello from Go! Calling Rust through C ffi now...\n")
+    fmt.Printf("[Go]\tHello! Calling Rust through C ffi now...\n")
 
-    arrow_array := C.dummy_arrow_array()
-    arrow_schema := C.dummy_arrow_schema()
+    arrow_schema := &C.struct_ArrowSchema{}
 
-    fmt.Printf("ArrowArray=%v\n", arrow_array)
-    fmt.Printf("ArrowSchema=%v\n", arrow_schema)
-    fmt.Printf("=======================\n")
+    exportArrowSchema(schema, arrow_schema)
 
-    /*
-    arrow_schema := &C.ArrowSchema{
-        C.CString("F1-i32"),            // format
-        C.CString("testname"),          // name
-        C.CString("metadata"),          // metadata
-        C.int64_t(1),                      // flags
-        C.int64_t(0),                      // n_children
-        **C.ArrowSchema{&[0]byte{}},              // children
-        *C.ArrowSchema{&[0]byte{}},               // dictionary
-    }
-    */
-    C.call_with_ffi(arrow_array, arrow_schema)
+    ret := C.call_with_ffi_schema(arrow_schema)
 
-    fmt.Printf("Hello from Go, again! Successfully sent Arrow data to Rust.\n")
+    fmt.Printf("[Go]\tHello! Successfully called Rust with Arrow parameter. ret=%v.\n", ret)
     return nil
 }

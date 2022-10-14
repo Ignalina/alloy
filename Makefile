@@ -4,7 +4,9 @@ build-all:
 	go build ./...
 
 clean:
-	rm -f ffi/libimpl.a && rm -rf ./ffi/target
+	rm -f ./ffi/librust_impl.a
+	rm -rf ./ffi/target
+	rm -f ./ffi/Cargo.lock
 	rm -f alloy
 	go clean
 
