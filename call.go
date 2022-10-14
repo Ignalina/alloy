@@ -22,9 +22,11 @@ func exportArrowSchema(schema *arrow.Schema, out *C.struct_ArrowSchema) {
     out.dictionary = nil
     out.name = C.CString(field.Name)
     out.format = C.CString("i")
-    // out.metadata = (*C.char)(C.CBytes(field.Metadata))
-    // out.flags = C.int64_t(0)
+    out.metadata = (*C.char)(nil)
+    out.flags = C.int64_t(0)
     out.n_children = C.int64_t(0)
+
+    out.children = nil
 }
 
 func (goBridge GoBridge) Call(array *array.Int32, schema *arrow.Schema) error {
