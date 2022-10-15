@@ -1,4 +1,9 @@
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
-#include "../cdata/arrow/c/abi.h"
-void call_with_ffi(ArrowArray* array, ArrowSchema* schema);
 
+
+#include "../cdata/arrow/c/abi.h"
+
+void from_chunks_ffi(const ArrowArray *arrptr, const ArrowSchema *schptr, uintptr_t l);

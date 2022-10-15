@@ -12,12 +12,15 @@ func main() {
 
 	bld := array.NewInt32Builder(mem)
 	defer bld.Release()
-	bld.AppendValues([]int32{122}, []bool{false})
+	bld.AppendValues([]int32{122}, []bool{true})
 	arr := bld.NewInt32Array() // materialize the array
 	defer arr.Release()
 
 	fmt.Printf("Calling the goBridge with:\narray=%v\n", arr)
 	goBridge := cdata.GoBridge{GoAllocator: mem}
-	err := goBridge.Call(arr)
-	fmt.Println(err)
+	err := goBridge.Call(*arr)
+
+	if (nil != err) {
+		fmt.Println(err)
+	}
 }
