@@ -35,14 +35,14 @@ func (goBridge GoBridge) Call(arrays []*array.Int32) (int, error) {
         Carrays = append(Carrays, caa)
     }
 
-	fmt.Printf("[Go]\tCalling Rust through C ffi now...\n")
+    fmt.Printf("[Go]\tCalling Rust through C ffi now...\n")
     ret := C.call_with_ffi_voidptr(
-        unsafe.Pointer(&Cschemas),
-        unsafe.Pointer(&Carrays),
-        C.uintptr_t(len(Carrays)),
+        unsafe.Pointer(&Cschemas[0]),
+        unsafe.Pointer(&Carrays[0]),
+        C.uintptr_t(len(Cschemas)),
     )
-
-	fmt.Printf("[Go]\tHello, again! Successfully sent Arrow data to Rust.\n")
-	return int(ret), nil
+    
+    fmt.Printf("[Go]\tHello, again! Successfully sent Arrow data to Rust.\n")
+    return int(ret), nil
 }
 

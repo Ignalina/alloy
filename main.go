@@ -15,27 +15,34 @@ func appendToBuilder(builder *array.Int32Builder, values []int32) {
     builder.AppendValues(values, valids)
 }
 
+func buildAndAppend(mem *memory.GoAllocator, values [][]int32) ([]*array.Int32Builder, []*array.Int32) {
+    var arrays []*array.Int32
+    var builders []*array.Int32Builder
+    num_vals := len(values)
+
+    for idx := 0; idx < num_vals; idx++ {
+        builder := array.NewInt32Builder(mem)
+        appendToBuilder(builder, values[idx])
+        array := builder.NewInt32Array()
+        arrays = append(arrays, array)
+        builders = append(builders, builder)
+    }
+    return builders, arrays
+}
+
 func main() {
 	mem := memory.NewGoAllocator()
-    values := []int32{1, 2, 3, -4}
-    var arrays []*array.Int32
+    values := [][]int32{
+        {1, 2, 3, -4},
+        {2, 3, 4, 5},
+        {3, 4, 5, 6},
+    }
 
-    // Append values to the Int32 Builder,
-    // then materialize the Array in memory.
-	bld0 := array.NewInt32Builder(mem)
-    appendToBuilder(bld0, values)
-	arr0 := bld0.NewInt32Array()
-	defer bld0.Release()
-	defer arr0.Release()
-
-	bld1 := array.NewInt32Builder(mem)
-    appendToBuilder(bld1, values)
-	arr1 := bld1.NewInt32Array()
-    defer bld1.Release()
-	defer arr1.Release()
-
-    arrays = append(arrays, arr0)
-    arrays = append(arrays, arr1)
+    builders, arrays := buildAndAppend(mem, values)
+    for idx := 0; idx < len(arrays); idx++ {
+        defer builders[idx].Release()
+        defer arrays[idx].Release()
+    }
     fmt.Printf("[Go]\tCalling the goBridge with:\n\t%v\n", arrays)
 
 	goBridge := cdata.GoBridge{GoAllocator: mem}
