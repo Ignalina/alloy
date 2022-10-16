@@ -1,21 +1,39 @@
-use libc::c_int;
-use arrow2::datatypes::{Field, DataType};
-use arrow2::ffi::{ArrowSchema, export_field_to_c};
+use arrow2::array::Array;
+use arrow2::datatypes::Field;
+use arrow2::ffi;
+use libc::c_uint;
 
 #[no_mangle]
-pub extern "C" fn call_with_ffi_schema(
-    ffi_schema: &ArrowSchema
-) -> ArrowSchema {
+pub unsafe extern "C" fn from_chunks_ffi(
+    arrptr: *const ffi::ArrowArray,
+    schptr: *const ffi::ArrowSchema,
+    l: usize
+    ) -> c_uint {
 
-    println!("[Rust]\tHello! Here is the schema from Go side: {:?}", ffi_schema);
-    
-    let field: Field = Field::new("F1-i32", DataType::Int32, true); 
-    let schema: ArrowSchema = export_field_to_c(&field);
-    
-    println!("[Rust]\tcreated Field: {:?}", field);
-    println!("[Rust]\tffi_schema created on rust side from rust-arrow2 datatype: {:?}", schema);
+    println!("[Rust]\tHello! Reading the ffi pointers now.");
+    let mut arrays: Vec<Box<dyn Array>> = Vec::with_capacity(l);
 
-    println!("[Rust]\tsending the Schema to Go now...");
+    // Lets actually do proper Rust error handling. We pattern match on the result and
+    // handle the error approprietly instead of unwrap. Also, lets return the the length
+    // of the built Vec, instead of just returning the provided arg l.
+    for index in 0..l {
+            let field: Field = match ffi::import_field_from_c(&schptr.add(index).read()) {
+                Ok(f) => f,
+                Err(e) => panic!("Could not import_field_from_c: {:?}", e),
+            };
 
-    schema
+            let array: Box<dyn Array> = match ffi::import_array_from_c(arrptr.add(index).read(), field.data_type) {
+                Ok(a) => a,
+                Err(e) => panic!("Could not import_array_from_c: {:?}", e),
+            };
+
+            arrays.push(array);
+    }
+
+    for (i, array) in arrays.iter().enumerate() {
+        println!("[Rust]\tarray{}: {:?}", i + 1, array);
+    }
+
+    arrays.len() as c_uint
 }
+

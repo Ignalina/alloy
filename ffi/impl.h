@@ -1,4 +1,4 @@
-#include "../ARROW_C_DATA_INTERFACE.h"
-// int call_with_ffi(struct ArrowArray* array, struct ArrowSchema* schema);
-struct ArrowSchema* call_with_ffi_schema(struct ArrowSchema* schema);
+#include <stdint.h>
+#include "../cdata/arrow/c/abi.h"
+uint from_chunks_ffi(const ArrowArray* arrptr, const ArrowSchema* schptr, uintptr_t l);
 
