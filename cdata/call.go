@@ -24,22 +24,22 @@ type GoBridge struct {
 }
 
 func (goBridge GoBridge) Call(arrays []*array.Int32) (int, error) {
-    var carrowschemas []cdata.CArrowSchema
-    var carrowarrays []cdata.CArrowArray
+    var Cschemas []cdata.CArrowSchema
+    var Carrays []cdata.CArrowArray
     for idx, array := range arrays {
         fmt.Printf("[Go]\tExporting schema+array #%v\n", idx + 1)
         cas := cdata.CArrowSchema{}
         caa := cdata.CArrowArray{}
         cdata.ExportArrowArray(array, &caa, &cas) 
-        carrowschemas = append(carrowschemas, cas)
-        carrowarrays = append(carrowarrays, caa)
+        Cschemas = append(Cschemas, cas)
+        Carrays = append(Carrays, caa)
     }
 
 	fmt.Printf("[Go]\tCalling Rust through C ffi now...\n")
     ret := C.call_with_ffi_voidptr(
-        unsafe.Pointer(&carrowschemas),
-        unsafe.Pointer(&carrowarrays),
-        C.uintptr_t(len(carrowschemas)),
+        unsafe.Pointer(&Cschemas),
+        unsafe.Pointer(&Carrays),
+        C.uintptr_t(len(Carrays)),
     )
 
 	fmt.Printf("[Go]\tHello, again! Successfully sent Arrow data to Rust.\n")
