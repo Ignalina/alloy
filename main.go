@@ -24,11 +24,6 @@ func main() {
 
     fmt.Printf("[Go]\tCalling the goBridge with:\n\tarray1: %v\n\tarray2: %v\n", arr0, arr1)
 
-<<<<<<< HEAD
-    goBridge := GoBridge{GoAllocator: mem}
-    err := goBridge.Call(arr, sch)
-    fmt.Println(err)
-=======
 	goBridge := cdata.GoBridge{GoAllocator: mem}
 	i, err := goBridge.Call(*arr0, *arr1)
 
@@ -37,5 +32,4 @@ func main() {
 	} else {
 		fmt.Printf("[Go]\tRust counted %v arrays sent through FFI\n", i)
 	}
->>>>>>> develop/rust
 }
