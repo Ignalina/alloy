@@ -1,6 +1,4 @@
-//use libc::c_int;
-//use arrow::ffi::{FFI_ArrowArray, FFI_ArrowSchema};
-//use arrow::array::{ArrayRef, make_array_from_raw};
+
 
 use arrow2::{array::Array, datatypes::DataType, error::Result,ffi};
 use libc::c_int;
@@ -12,7 +10,6 @@ pub unsafe extern "C" fn from_chunks_ffi(
     l: usize
     ) -> c_int {
 
-    println!("Hello2 from Rust!");
 
 
     let mut cs: Vec<Box<dyn Array>> = Vec::with_capacity(l);
@@ -20,10 +17,12 @@ pub unsafe extern "C" fn from_chunks_ffi(
     for index in 0..l {
             let field = ffi::import_field_from_c(&schptr.add(index).read()).unwrap();
             let array = ffi::import_array_from_c(arrptr.add(index).read(),field.data_type);
-            cs.push(array.unwrap());
+//          cs.push(array.unwrap());
+            let a =array.unwrap();
+            println!("array {:?}",a);
     }
 
-    1 as c_int
+    l as c_int
 }
 
 

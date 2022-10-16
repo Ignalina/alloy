@@ -11,10 +11,10 @@ import (
 /*
 #cgo LDFLAGS: ./ffi/librust_impl.a -ldl -lm
 #include "arrow/c/abi.h"
-void from_chunks_ffi(const struct ArrowArray *arrptr, const struct  ArrowSchema *schptr, uintptr_t l);
+int from_chunks_ffi(const struct ArrowArray *arrptr, const struct  ArrowSchema *schptr, uintptr_t l);
 
-void call_with_ffi_voidptr(void* schema,void* array,uintptr_t l) {
-from_chunks_ffi(array,schema,l);
+int call_with_ffi_voidptr(void* schema,void* array,uintptr_t l) {
+return from_chunks_ffi(array,schema,l);
 }
 
 */
@@ -24,19 +24,18 @@ type GoBridge struct {
 	GoAllocator *memory.GoAllocator
 }
 
-func (goBridge GoBridge) Call(array array.Int32) error {
+func (goBridge GoBridge) Call(array0 array.Int32, array1 array.Int64) (int, error) {
 	fmt.Printf("Hello from Go! Calling Rust through C ffi now...\n")
-	var cas [1]cdata.CArrowSchema
-	var caa [1]cdata.CArrowArray
+	var cas [2]cdata.CArrowSchema
+	var caa [2]cdata.CArrowArray
 
-	//	cas := &cdata.CArrowSchema{}
-	//	caa := &cdata.CArrowArray{}
-	cdata.ExportArrowArray(&array, &caa[0], &cas[0])
+	cdata.ExportArrowArray(&array0, &caa[0], &cas[0])
+	cdata.ExportArrowArray(&array1, &caa[1], &cas[1])
 
 	fmt.Printf("You can do it , go Rust land !\n")
 
-	C.call_with_ffi_voidptr(unsafe.Pointer(&cas), unsafe.Pointer(&caa), C.uintptr_t(1))
+	i := C.call_with_ffi_voidptr(unsafe.Pointer(&cas), unsafe.Pointer(&caa), C.uintptr_t(2))
 
 	fmt.Printf("Hello0 from Go, again! Successfully sent Arrow data to Rust.\n")
-	return nil
+	return int(i), nil
 }
