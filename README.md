@@ -67,6 +67,22 @@ kernel panic in Rust because we are sending an empty Array to the function.
 $ make build-all
 ``` 
 
+11 Seconds later on a 32 core threadipper PRO :)
+```
+$ ./alloy
+rickard@Mother:~/GolandProjects/alloy$ ./alloy 
+Calling the goBridge with:
+array0=[122] 
+array1=[122] 
+Hello from Go! Calling Rust through C ffi now...
+You can do it , go Rust land !
+array Int32[122]
+array Int64[122]
+Hello0 from Go, again! Successfully sent Arrow data to Rust.
+Go had the following amount of arrays reported 2
+```
+
+
 ## Requirements
 - Apache Arrow v9.0.0 https://arrow.apache.org/install/
 - Go v1.19.1 https://go.dev/dl/ 
