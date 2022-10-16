@@ -1,7 +1,8 @@
-![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.png)<br>
 ![Builds](https://github.com/Ignalina/alloy/actions/workflows/builds.yml/badge.svg)
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
 ![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
+![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.png)<br>
+
 ---
 Go (Arrow buffs) --> Rust calls with Apache Arrow datatype's as parameters.
 
@@ -14,6 +15,25 @@ interface using Cgo and Rust ffi; with close to zero overhead using the Apache A
 data format. Only pointers referencing the allocated memory is sent between the
 different language binaries, allowing for fast, (somewhat) robust, and colorful use
 cases in data engineering scenarios.
+
+## Usage example 
+Asume you have a MyCoolRustLib.a 
+```golang
+
+	listOfarrays := []arrow.Array{arr1, arr1}
+
+	fmt.Printf("[Go]\tCalling the goBridge with:\n\tarr: %v\n", listOfarrays)
+
+	goBridge := GoBridge{GoAllocator: mem}
+	i, err := goBridge.From_chunks(listOfarrays)
+
+	if nil != err {
+		fmt.Println(err)
+	} else {
+		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", i)
+	}
+```
+
 
 
 
@@ -31,7 +51,7 @@ cases in data engineering scenarios.
 - Go v1.19.1 https://go.dev/dl/ 
 - Arrow2 v.0.14.2 https://crates.io/crates/arrow2
 
-## Setup
+## Setup (total rebuild)
 If you are on a a debian based Linux system, you can very easily install the tools
 needed to install Rust and similar tools, simply do this with the following command.
 ``` 
