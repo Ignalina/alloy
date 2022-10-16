@@ -5,7 +5,7 @@ import (
 	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/array"
 	"github.com/apache/arrow/go/v9/arrow/memory"
-	"github.com/ignalina/alloy/implementation"
+	"github.com/ignalina/alloy/api"
 )
 
 func main() {
