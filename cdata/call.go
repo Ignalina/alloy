@@ -12,9 +12,8 @@ import (
 #cgo LDFLAGS: ./ffi/librust_impl.a -ldl -lm
 #include "arrow/c/abi.h"
 int from_chunks_ffi(const struct ArrowArray *arrptr, const struct  ArrowSchema *schptr, uintptr_t l);
-
-int call_with_ffi_voidptr(void* schema,void* array,uintptr_t l) {
-return from_chunks_ffi(array,schema,l);
+int call_with_ffi_voidptr(void* schema, void* array, uintptr_t l) {
+    return from_chunks_ffi(array, schema, l);
 }
 
 */
