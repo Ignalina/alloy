@@ -34,6 +34,8 @@ import (
 	listOfarrays := []arrow.Array{arr1, arr2}
 
 	goBridge := GoBridge{GoAllocator: mem}
+	goBridge.SetImplLib("/app/MyCoolRustLib.a","<BASE64 encoded cert>");
+	
 	i, err := goBridge.From_chunks(listOfarrays)
 
 	if nil != err {
