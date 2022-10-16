@@ -5,6 +5,7 @@ import (
 	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/array"
 	"github.com/apache/arrow/go/v9/arrow/memory"
+	"github.com/ignalina/alloy/implementation"
 )
 
 func main() {
@@ -26,7 +27,7 @@ func main() {
 
 	fmt.Printf("[Go]\tCalling the goBridge with:\n\tarr: %v\n", listOfarrays)
 
-	goBridge := GoBridge{GoAllocator: mem}
+	goBridge := api.GoBridge{GoAllocator: mem}
 	i, err := goBridge.From_chunks(listOfarrays)
 
 	if nil != err {

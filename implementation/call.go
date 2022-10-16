@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 
 /*
 #cgo LDFLAGS: ./ffi/librust_impl.a -ldl -lm
-#include "cdata/arrow/c/abi.h"
+#include "../cdata/arrow/c/abi.h"
 int from_chunks_ffi(const struct ArrowArray *arrptr, const struct  ArrowSchema *schptr, uintptr_t l);
 int from_chunks_ffi_voidptr(void* schema, void* array, uintptr_t l) {
     return from_chunks_ffi(array, schema, l);
