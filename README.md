@@ -5,6 +5,9 @@
 ---
 Go (Arrow buffs) --> Rust calls with Apache Arrow datatype's as parameters.
 
+
+![alloy](https://raw.githubusercontent.com/Ignalina/alloy/main/doc/alloy_schematic.svg)
+
 ## Goals and versions
 In general, the overarching goal of the `alloy go module` is to enable Go to Rust calls through C
 interface using Cgo and Rust ffi; with close to zero overhead using the Apache Arrow
