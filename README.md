@@ -19,10 +19,19 @@ cases in data engineering scenarios.
 ## Usage example 
 Asume you have a MyCoolRustLib.a 
 ```golang
+package main
 
-	listOfarrays := []arrow.Array{arr1, arr1}
+import (
+	"fmt"
+	"github.com/apache/arrow/go/v9/arrow"
+	"github.com/apache/arrow/go/v9/arrow/array"
+	"github.com/apache/arrow/go/v9/arrow/memory"
+	"github.com/ignalina/alloy"
+)
 
-	fmt.Printf("[Go]\tCalling the goBridge with:\n\tarr: %v\n", listOfarrays)
+// Assume you have 2 arrays arr1, arr2 ..
+
+	listOfarrays := []arrow.Array{arr1, arr2}
 
 	goBridge := GoBridge{GoAllocator: mem}
 	i, err := goBridge.From_chunks(listOfarrays)
