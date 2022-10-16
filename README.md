@@ -63,6 +63,8 @@ $ cargo version
 and in theory, you could now make and run the examples in the repo. As for now, all
 builds and tests are passing. But the implemented example in `testapp.go` is causing a
 kernel panic in Rust because we are sending an empty Array to the function.
+
+NOTE: current working branch is developer/rust
 ```
 $ make build-all
 ``` 
