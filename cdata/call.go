@@ -23,17 +23,26 @@ type GoBridge struct {
 	GoAllocator *memory.GoAllocator
 }
 
-func (goBridge GoBridge) Call(array0 array.Int32, array1 array.Int64) (int, error) {
+func (goBridge GoBridge) Call(arrays []*array.Int32) (int, error) {
+    var carrowschemas []cdata.CArrowSchema
+    var carrowarrays []cdata.CArrowArray
+    for idx, array := range arrays {
+        fmt.Printf("[Go]\tExporting schema+array #%v\n", idx + 1)
+        cas := cdata.CArrowSchema{}
+        caa := cdata.CArrowArray{}
+        cdata.ExportArrowArray(array, &caa, &cas) 
+        carrowschemas = append(carrowschemas, cas)
+        carrowarrays = append(carrowarrays, caa)
+    }
+
 	fmt.Printf("[Go]\tCalling Rust through C ffi now...\n")
-	var cas [2]cdata.CArrowSchema
-	var caa [2]cdata.CArrowArray
-
-	cdata.ExportArrowArray(&array0, &caa[0], &cas[0])
-	cdata.ExportArrowArray(&array1, &caa[1], &cas[1])
-
-	i := C.call_with_ffi_voidptr(unsafe.Pointer(&cas), unsafe.Pointer(&caa), C.uintptr_t(2))
+    ret := C.call_with_ffi_voidptr(
+        unsafe.Pointer(&carrowschemas),
+        unsafe.Pointer(&carrowarrays),
+        C.uintptr_t(len(carrowschemas)),
+    )
 
 	fmt.Printf("[Go]\tHello, again! Successfully sent Arrow data to Rust.\n")
-	return int(i), nil
+	return int(ret), nil
 }
 

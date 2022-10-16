@@ -7,29 +7,43 @@ import (
 	"github.com/ignalina/alloy/cdata"
 )
 
+func appendToBuilder(builder *array.Int32Builder, values []int32) {
+    var valids []bool
+    for idx := 0; idx < len(values); idx++ {
+        valids = append(valids, true)
+    }
+    builder.AppendValues(values, valids)
+}
+
 func main() {
 	mem := memory.NewGoAllocator()
+    values := []int32{1, 2, 3, -4}
+    var arrays []*array.Int32
 
+    // Append values to the Int32 Builder,
+    // then materialize the Array in memory.
 	bld0 := array.NewInt32Builder(mem)
+    appendToBuilder(bld0, values)
+	arr0 := bld0.NewInt32Array()
 	defer bld0.Release()
-	bld0.AppendValues([]int32{122}, []bool{true})
-	arr0 := bld0.NewInt32Array() // materialize the array
 	defer arr0.Release()
 
-	bld1 := array.NewInt64Builder(mem)
-	defer bld1.Release()
-	bld1.AppendValues([]int64{122}, []bool{true})
-	arr1 := bld1.NewInt64Array() // materialize the array
+	bld1 := array.NewInt32Builder(mem)
+    appendToBuilder(bld1, values)
+	arr1 := bld1.NewInt32Array()
+    defer bld1.Release()
 	defer arr1.Release()
 
-    fmt.Printf("[Go]\tCalling the goBridge with:\n\tarray1: %v\n\tarray2: %v\n", arr0, arr1)
+    arrays = append(arrays, arr0)
+    arrays = append(arrays, arr1)
+    fmt.Printf("[Go]\tCalling the goBridge with:\n\t%v\n", arrays)
 
 	goBridge := cdata.GoBridge{GoAllocator: mem}
-	i, err := goBridge.Call(*arr0, *arr1)
+	ret, err := goBridge.Call(arrays)
 
 	if nil != err {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", i)
+		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", ret)
 	}
 }
