@@ -12,7 +12,7 @@ import (
 #cgo LDFLAGS: ./ffi/librust_impl.a -ldl -lm
 #include "cdata/arrow/c/abi.h"
 int from_chunks_ffi(const struct ArrowArray *arrptr, const struct  ArrowSchema *schptr, uintptr_t l);
-int call_with_ffi_voidptr(void* schema, void* array, uintptr_t l) {
+int from_chunks_ffi_voidptr(void* schema, void* array, uintptr_t l) {
     return from_chunks_ffi(array, schema, l);
 }
 
@@ -34,7 +34,7 @@ func (goBridge GoBridge) From_chunks(array []arrow.Array) (int, error) {
 		cdata.ExportArrowArray(array[i], &caa[i], &cas[i])
 	}
 
-	handledRows := C.call_with_ffi_voidptr(unsafe.Pointer(&cas), unsafe.Pointer(&caa), C.uintptr_t(len(array)))
+	handledRows := C.from_chunks_ffi_voidptr(unsafe.Pointer(&cas), unsafe.Pointer(&caa), C.uintptr_t(len(array)))
 
 	fmt.Printf("[Go]\tHello, again! Successfully sent Arrow data to Rust.\n")
 	return int(handledRows), nil
