@@ -5,29 +5,23 @@
 ---
 Go (Arrow buffs) --> Rust calls with Apache Arrow datatype's as parameters.
 
-Under early setup, reading these as inspiration and references:
-- https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
-- https://github.com/mediremi/rust-plus-golang Rust code from Go using cgo and ffi
-- https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
-- https://arrow.apache.org/docs/status.html#ipc-format
-- https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
-- https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo some information regarding C structs in Go
-
 ## Goals and versions
-In general, the overarching goal of `alloy` is to enable Go to Rust calls through C
+In general, the overarching goal of the `alloy go module` is to enable Go to Rust calls through C
 interface using Cgo and Rust ffi; with close to zero overhead using the Apache Arrow
 data format. Only pointers referencing the allocated memory is sent between the
 different language binaries, allowing for fast, (somewhat) robust, and colorful use
 cases in data engineering scenarios.
 
+
+
 ### v0.1
-- Import Arrow Array chunks through ffi pointers to schema and array, from Go to Rust.
+- from Go to Rust Import Arrow Array chunks through ffi pointers to schema and array, .
 - Send information back to Go instance from Rust.
 - Access Go allocated memory without GC causing kernel panics.
 
 ### v0.2 (?)
 - Aggregation on Arrow Array in Rust and accessing memory in Go.
-- ...
+- IPC (Streaming)
 
 ## Requirements
 - Apache Arrow v9.0.0 https://arrow.apache.org/install/
@@ -100,4 +94,12 @@ $ ./alloy
 All code written is to be held under a general MIT-license, please see 
 [LICENSE](https://github.com/Ignalina/alloy/blob/main/LICENSE) for
 specific information.
+
+## Under early setup, reading these as inspiration and references:
+- https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
+- https://github.com/mediremi/rust-plus-golang Rust code from Go using cgo and ffi
+- https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
+- https://arrow.apache.org/docs/status.html#ipc-format
+- https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
+- https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo some information regarding C structs in Go
 
