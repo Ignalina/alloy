@@ -25,17 +25,15 @@ type GoBridge struct {
 }
 
 func (goBridge GoBridge) Call(array0 array.Int32, array1 array.Int64) (int, error) {
-	fmt.Printf("Hello from Go! Calling Rust through C ffi now...\n")
+	fmt.Printf("[Go]\tCalling Rust through C ffi now...\n")
 	var cas [2]cdata.CArrowSchema
 	var caa [2]cdata.CArrowArray
 
 	cdata.ExportArrowArray(&array0, &caa[0], &cas[0])
 	cdata.ExportArrowArray(&array1, &caa[1], &cas[1])
 
-	fmt.Printf("You can do it , go Rust land !\n")
-
 	i := C.call_with_ffi_voidptr(unsafe.Pointer(&cas), unsafe.Pointer(&caa), C.uintptr_t(2))
 
-	fmt.Printf("Hello0 from Go, again! Successfully sent Arrow data to Rust.\n")
+	fmt.Printf("[Go]\tHello, again! Successfully sent Arrow data to Rust.\n")
 	return int(i), nil
 }

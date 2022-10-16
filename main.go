@@ -22,7 +22,7 @@ func main() {
 	arr1 := bld1.NewInt64Array() // materialize the array
 	defer arr1.Release()
 
-	fmt.Printf("Calling the goBridge with:\narray0=%v \narray1=%v \n", arr0, arr1)
+    fmt.Printf("[Go]\tCalling the goBridge with:\n\tarray1: %v\n\tarray2: %v\n", arr0, arr1)
 
 	goBridge := cdata.GoBridge{GoAllocator: mem}
 	i, err := goBridge.Call(*arr0, *arr1)
@@ -30,7 +30,6 @@ func main() {
 	if nil != err {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("Go had the following amount of arrays reported %v  ", i)
+		fmt.Printf("[Go]\tRust counted %v arrays sent through FFI\n", i)
 	}
-
 }
