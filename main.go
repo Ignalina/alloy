@@ -30,6 +30,6 @@ func main() {
 	if nil != err {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("[Go]\tRust counted %v arrays sent through FFI\n", i)
+		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", i)
 	}
 }

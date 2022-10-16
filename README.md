@@ -3,18 +3,36 @@
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
 ![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
 ---
+Go (Arrow buffs) --> Rust calls with Apache Arrow datatype's as parameters.
 
-Go (Arrow buffs)--> Rust 
-calls with Apache Arrow datatype's as parameter
+Under early setup, reading these as inspiration and references:
+- https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
+- https://github.com/mediremi/rust-plus-golang Rust code from Go using cgo and ffi
+- https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
+- https://arrow.apache.org/docs/status.html#ipc-format
+- https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
+- https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo some information regarding C structs in Go
 
-Under early setup at atm reading these as inspiration.
-* https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
-* https://github.com/mediremi/rust-plus-golang 
-* https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
-* https://arrow.apache.org/docs/status.html#ipc-format
-* https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
-* https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo
-  some information regarding C structs in Go
+## Goals and versions
+In general, the overarching goal of `alloy` is to enable Go to Rust calls through C
+interface using Cgo and Rust ffi; with close to zero overhead using the Apache Arrow
+data format. Only pointers referencing the allocated memory is sent between the
+different language binaries, allowing for fast, (somewhat) robust, and colorful use
+cases in data engineering scenarios.
+
+### v0.1
+- Import Arrow Array chunks through ffi pointers to schema and array, from Go to Rust.
+- Send information back to Go instance from Rust.
+- Access Go allocated memory without GC causing kernel panics.
+
+### v0.2 (?)
+- Aggregation on Arrow Array in Rust and accessing memory in Go.
+- ...
+
+## Requirements
+- Apache Arrow v9.0.0 https://arrow.apache.org/install/
+- Go v1.19.1 https://go.dev/dl/ 
+- Arrow2 v.0.14.2 https://crates.io/crates/arrow2
 
 ## Setup
 If you are on a a debian based Linux system, you can very easily install the tools
@@ -45,7 +63,6 @@ now you can verify that the Go compiler is installed properly by checking its ve
 $ go version
 ``` 
 
-
 Next step is to install Rust. Perhaps a bit counter-intuitive, but this is a lot
 easier than the Go install. Simply go to this page https://rustup.rs/ and follow the
 guide on screen. It will install the Rust toolchain which constitutes of; the Rust
@@ -59,48 +76,25 @@ Again you can verify that everything is installed properly by running
 $ cargo version
 ```
 
-
 and in theory, you could now make and run the examples in the repo. As for now, all
-builds and tests are passing. But the implemented example in `testapp.go` is causing a
-kernel panic in Rust because we are sending an empty Array to the function.
-
-NOTE: current working branch is developer/rust
+builds and tests are passing. 
 ```
 $ make build-all
 ``` 
 
-11 Seconds later on a 32 core threadipper PRO :)
+11 Seconds later on a 32 core threadipper PRO you will see
 ```
 $ ./alloy
-rickard@Mother:~/GolandProjects/alloy$ ./alloy 
-Calling the goBridge with:
-array0=[122] 
-array1=[122] 
-Hello from Go! Calling Rust through C ffi now...
-You can do it , go Rust land !
-array Int32[122]
-array Int64[122]
-Hello0 from Go, again! Successfully sent Arrow data to Rust.
-Go had the following amount of arrays reported 2
+[Go]	Calling the goBridge with:
+        array1: [122]
+        array2: [122]
+[Go]	Calling Rust through C ffi now...
+[Rust]	Hello! Reading the ffi pointers now.
+[Rust]	array1: Int32[122]
+[Rust]	array2: Int64[122]
+[Go]	Hello, again! Successfully sent Arrow data to Rust.
+[Go]	Rust counted 2 arrays sent through ffi```
 ```
-
-
-## Requirements
-- Apache Arrow v9.0.0 https://arrow.apache.org/install/
-- Go v1.19.1 https://go.dev/dl/ 
-
-## Goals
-
-### V0 Either using C-api or IPC
- 
-* Transfer hardcoded array of floats / ints/ strings..  
-* Transfer schema describing array of arrays datatypes ... (Table!)  
-* Buildscripts using Docker building GO and possible RUST part  
-
-### V0.1   
-
-### n Thanks to inspiring GO-Rust repo
-* https://github.com/mediremi/rust-plus-golang
 
 ## License
 All code written is to be held under a general MIT-license, please see 
