@@ -2,6 +2,17 @@ use arrow2::array::Array;
 use arrow2::datatypes::Field;
 use arrow2::ffi;
 use libc::c_uint;
+use chrono::offset::Local;
+
+macro_rules! info {
+    ($($arg:tt)*) => {
+        println!(
+            "{} [INFO] [Rust]\t{}", 
+            Local::now().format("[%Y-%m-%d %H:%M:%S]"),
+            format!($($arg)*)
+        );
+    }
+}
 
 #[no_mangle]
 pub unsafe extern "C" fn from_chunks_ffi(
@@ -10,7 +21,7 @@ pub unsafe extern "C" fn from_chunks_ffi(
     l: usize
     ) -> c_uint {
 
-    println!("[Rust]\tHello! Reading the ffi pointers now.");
+    info!("Hello! Reading the ffi pointers now.");
     let mut arrays: Vec<Box<dyn Array>> = Vec::with_capacity(l);
 
     // Lets actually do proper Rust error handling. We pattern match on the result and
@@ -31,7 +42,7 @@ pub unsafe extern "C" fn from_chunks_ffi(
     }
 
     for (i, array) in arrays.iter().enumerate() {
-        println!("[Rust]\tarray{}: {:?}", i + 1, array);
+        info!("array{}: {:?}", i + 1, array);
     }
 
     arrays.len() as c_uint

@@ -8,31 +8,51 @@ import (
 	"github.com/ignalina/alloy/api"
 )
 
+func appendToBuilder(builder *array.Int32Builder, values []int32) {
+    var valids []bool
+    for idx := 0; idx < len(values); idx++ {
+        valids = append(valids, true)
+    }
+    builder.AppendValues(values, valids)
+}
+
+func buildAndAppend(mem *memory.GoAllocator, values [][]int32) ([]*array.Int32Builder, []arrow.Array) {
+    var arrays []arrow.Array
+    var builders []*array.Int32Builder
+    num_vals := len(values)
+
+    for idx := 0; idx < num_vals; idx++ {
+        builder := array.NewInt32Builder(mem)
+        appendToBuilder(builder, values[idx])
+        array := builder.NewInt32Array()
+        arrays = append(arrays, array)
+        builders = append(builders, builder)
+    }
+    return builders, arrays
+}
+
 func main() {
 	mem := memory.NewGoAllocator()
+    values := [][]int32{
+        {1, 2, 3, -4},
+        {2, 3, 4, 5},
+        {3, 4, 5, 6},
+    }
 
-	bld0 := array.NewInt32Builder(mem)
-	defer bld0.Release()
-	bld0.AppendValues([]int32{122}, []bool{true})
-	arr0 := bld0.NewInt32Array() // materialize the array
-	defer arr0.Release()
+    builders, arrays := buildAndAppend(mem, values)
+    for idx := 0; idx < len(arrays); idx++ {
+        defer builders[idx].Release()
+        defer arrays[idx].Release()
+    }
 
-	bld1 := array.NewInt64Builder(mem)
-	defer bld1.Release()
-	bld1.AppendValues([]int64{122}, []bool{true})
-	arr1 := bld1.NewInt64Array() // materialize the array
-	defer arr1.Release()
-
-	listOfarrays := []arrow.Array{arr1, arr1}
-
-	fmt.Printf("[Go]\tCalling the goBridge with:\n\tarr: %v\n", listOfarrays)
-
+    api.Info(fmt.Sprintf("Calling the goBridge with:\n\t%v", arrays))
 	goBridge := api.GoBridge{GoAllocator: mem}
-	i, err := goBridge.From_chunks(listOfarrays)
+	ret, err := goBridge.FromChunks(arrays)
 
 	if nil != err {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", i)
+        api.Info(fmt.Sprintf("Rust counter %v arrays sent through ffi", ret))
 	}
 }
+
