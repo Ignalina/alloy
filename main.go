@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/array"
 	"github.com/apache/arrow/go/v9/arrow/memory"
-	"github.com/ignalina/alloy/cdata"
+    "github.com/ignalina/alloy/api"
 )
 
 func appendToBuilder(builder *array.Int32Builder, values []int32) {
@@ -15,8 +16,8 @@ func appendToBuilder(builder *array.Int32Builder, values []int32) {
     builder.AppendValues(values, valids)
 }
 
-func buildAndAppend(mem *memory.GoAllocator, values [][]int32) ([]*array.Int32Builder, []*array.Int32) {
-    var arrays []*array.Int32
+func buildAndAppend(mem *memory.GoAllocator, values [][]int32) ([]*array.Int32Builder, []arrow.Array) {
+    var arrays []arrow.Array
     var builders []*array.Int32Builder
     num_vals := len(values)
 
@@ -43,10 +44,10 @@ func main() {
         defer builders[idx].Release()
         defer arrays[idx].Release()
     }
-    fmt.Printf("[Go]\tCalling the goBridge with:\n\t%v\n", arrays)
 
-	goBridge := cdata.GoBridge{GoAllocator: mem}
-	ret, err := goBridge.Call(arrays)
+    fmt.Printf("[Go]\tCalling the goBridge with:\n\t%v\n", arrays)
+	goBridge := api.GoBridge{GoAllocator: mem}
+	ret, err := goBridge.FromChunks(arrays)
 
 	if nil != err {
 		fmt.Println(err)
@@ -54,3 +55,4 @@ func main() {
 		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", ret)
 	}
 }
+

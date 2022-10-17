@@ -1,8 +1,8 @@
-package cdata
+package api
 
 import (
 	"fmt"
-	"github.com/apache/arrow/go/v9/arrow/array"
+	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/cdata"
 	"github.com/apache/arrow/go/v9/arrow/memory"
 	"unsafe"
@@ -10,12 +10,8 @@ import (
 
 /*
 #cgo LDFLAGS: ./ffi/librust_impl.a -ldl -lm
-#include "arrow/c/abi.h"
-int from_chunks_ffi(const struct ArrowArray *arrptr, const struct  ArrowSchema *schptr, uintptr_t l);
-int call_with_ffi_voidptr(void* schema, void* array, uintptr_t l) {
-    return from_chunks_ffi(array, schema, l);
-}
-
+#include "../cdata/arrow/c/abi.h"
+#include "../ffi/impl.h"
 */
 import "C"
 
@@ -23,9 +19,10 @@ type GoBridge struct {
 	GoAllocator *memory.GoAllocator
 }
 
-func (goBridge GoBridge) Call(arrays []*array.Int32) (int, error) {
+func (goBridge GoBridge) FromChunks(arrays []arrow.Array) (int, error) {
     var Cschemas []cdata.CArrowSchema
     var Carrays []cdata.CArrowArray
+
     for idx, array := range arrays {
         fmt.Printf("[Go]\tExporting schema+array #%v\n", idx + 1)
         cas := cdata.CArrowSchema{}
