@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 	"unsafe"
-    "time"
+  "time"
 	"github.com/apache/arrow/go/v9/arrow"
 	"github.com/apache/arrow/go/v9/arrow/cdata"
 	"github.com/apache/arrow/go/v9/arrow/memory"
@@ -57,4 +57,3 @@ func (goBridge GoBridge) FromChunks(arrays []arrow.Array) (int, error) {
     Info("Hello, again! Successfully sent Arrow data to Rust.")
     return int(ret), nil
 }
-
