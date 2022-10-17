@@ -1,40 +1,68 @@
-![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.png)<br>
 ![Builds](https://github.com/Ignalina/alloy/actions/workflows/builds.yml/badge.svg)
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
 ![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
+![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.png)<br>
+
 ---
 Go (Arrow buffs) --> Rust calls with Apache Arrow datatype's as parameters.
 
-Under early setup, reading these as inspiration and references:
-- https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
-- https://github.com/mediremi/rust-plus-golang Rust code from Go using cgo and ffi
-- https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
-- https://arrow.apache.org/docs/status.html#ipc-format
-- https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
-- https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo some information regarding C structs in Go
+
+![alloy](https://raw.githubusercontent.com/Ignalina/alloy/main/doc/alloy_schematic.svg)
 
 ## Goals and versions
-In general, the overarching goal of `alloy` is to enable Go to Rust calls through C
+In general, the overarching goal of the `alloy go module` is to enable Go to Rust calls through C
 interface using Cgo and Rust ffi; with close to zero overhead using the Apache Arrow
 data format. Only pointers referencing the allocated memory is sent between the
 different language binaries, allowing for fast, (somewhat) robust, and colorful use
 cases in data engineering scenarios.
 
+## Usage example 
+Asume you have a MyCoolRustLib.a 
+```golang
+package main
+
+import (
+	"fmt"
+	"github.com/apache/arrow/go/v9/arrow"
+	"github.com/apache/arrow/go/v9/arrow/array"
+	"github.com/apache/arrow/go/v9/arrow/memory"
+	"github.com/ignalina/alloy"
+)
+
+// Assume you have 2 arrays arr1, arr2 ..
+
+	listOfarrays := []arrow.Array{arr1, arr2}
+
+	goBridge := GoBridge{GoAllocator: mem}
+	goBridge.SetImplLib("/app/MyCoolRustLib.a","<BASE64 encoded cert>");
+	
+	i, err := goBridge.From_chunks(listOfarrays)
+
+	if nil != err {
+		fmt.Println(err)
+	} else {
+		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", i)
+	}
+```
+
+
+
+
 ### v0.1
-- Import Arrow Array chunks through ffi pointers to schema and array, from Go to Rust.
+- from Go to Rust Import Arrow Array chunks through ffi pointers to schema and array, .
 - Send information back to Go instance from Rust.
 - Access Go allocated memory without GC causing kernel panics.
 
 ### v0.2 (?)
 - Aggregation on Arrow Array in Rust and accessing memory in Go.
-- ...
+- IPC (Streaming)
 
 ## Requirements
 - Apache Arrow v9.0.0 https://arrow.apache.org/install/
 - Go v1.19.1 https://go.dev/dl/ 
 - Arrow2 v.0.14.2 https://crates.io/crates/arrow2
 
-## Setup
+## Setup (total rebuild)
 If you are on a a debian based Linux system, you can very easily install the tools
 needed to install Rust and similar tools, simply do this with the following command.
 ``` 
@@ -100,4 +128,12 @@ $ ./alloy
 All code written is to be held under a general MIT-license, please see 
 [LICENSE](https://github.com/Ignalina/alloy/blob/main/LICENSE) for
 specific information.
+
+## Under early setup, reading these as inspiration and references:
+- https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
+- https://github.com/mediremi/rust-plus-golang Rust code from Go using cgo and ffi
+- https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
+- https://arrow.apache.org/docs/status.html#ipc-format
+- https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
+- https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo some information regarding C structs in Go
 

@@ -45,14 +45,14 @@ func main() {
         defer arrays[idx].Release()
     }
 
-    fmt.Printf("[Go]\tCalling the goBridge with:\n\t%v\n", arrays)
+    api.Info(fmt.Sprintf("Calling the goBridge with:\n\t%v", arrays))
 	goBridge := api.GoBridge{GoAllocator: mem}
 	ret, err := goBridge.FromChunks(arrays)
 
 	if nil != err {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", ret)
+        api.Info(fmt.Sprintf("Rust counter %v arrays sent through ffi", ret))
 	}
 }
 
