@@ -1,12 +1,9 @@
+![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.png)<br>
 ![Builds](https://github.com/Ignalina/alloy/actions/workflows/builds.yml/badge.svg)
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
 ![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
-![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.png)<br>
-
 ---
 Go (Arrow buffs) --> Rust calls with Apache Arrow datatype's as parameters.
-
-
 ![alloy](https://raw.githubusercontent.com/Ignalina/alloy/main/doc/alloy_schematic.svg)
 
 ## Goals and versions
@@ -15,6 +12,20 @@ interface using Cgo and Rust ffi; with close to zero overhead using the Apache A
 data format. Only pointers referencing the allocated memory is sent between the
 different language binaries, allowing for fast, (somewhat) robust, and colorful use
 cases in data engineering scenarios.
+
+### v0.1
+- from Go to Rust Import Arrow Array chunks through ffi pointers to schema and array, .
+- Send information back to Go instance from Rust.
+- Access Go allocated memory without GC causing kernel panics.
+
+### v0.2 (?)
+- Aggregation on Arrow Array in Rust and accessing memory in Go.
+- IPC (Streaming)
+
+## Requirements
+- Apache Arrow v9.0.0 https://arrow.apache.org/install/
+- Go v1.19.1 https://go.dev/dl/ 
+- Arrow2 v.0.14.2 https://crates.io/crates/arrow2
 
 ## Usage example 
 Asume you have a MyCoolRustLib.a 
@@ -44,23 +55,6 @@ import (
 		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", i)
 	}
 ```
-
-
-
-
-### v0.1
-- from Go to Rust Import Arrow Array chunks through ffi pointers to schema and array, .
-- Send information back to Go instance from Rust.
-- Access Go allocated memory without GC causing kernel panics.
-
-### v0.2 (?)
-- Aggregation on Arrow Array in Rust and accessing memory in Go.
-- IPC (Streaming)
-
-## Requirements
-- Apache Arrow v9.0.0 https://arrow.apache.org/install/
-- Go v1.19.1 https://go.dev/dl/ 
-- Arrow2 v.0.14.2 https://crates.io/crates/arrow2
 
 ## Setup (total rebuild)
 If you are on a a debian based Linux system, you can very easily install the tools
@@ -113,27 +107,28 @@ $ make build-all
 11 Seconds later on a 32 core threadipper PRO you will see
 ```
 $ ./alloy
-[Go]	Calling the goBridge with:
-        array1: [122]
-        array2: [122]
-[Go]	Calling Rust through C ffi now...
-[Rust]	Hello! Reading the ffi pointers now.
-[Rust]	array1: Int32[122]
-[Rust]	array2: Int64[122]
-[Go]	Hello, again! Successfully sent Arrow data to Rust.
-[Go]	Rust counted 2 arrays sent through ffi```
+[2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #1 to C
+[2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #2 to C
+[2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #3 to C
+[2022-10-17 18:09:34] [INFO] [Go]	Calling Rust through C ffi now with 3 ArrowArrays
+[2022-10-17 18:09:34] [INFO] [Rust]	Hello! Reading the ffi pointers now.
+[2022-10-17 18:09:34] [INFO] [Rust]	array1: Int32[1, 2, 3, -4]
+[2022-10-17 18:09:34] [INFO] [Rust]	array2: Int32[2, 3, 4, 5]
+[2022-10-17 18:09:34] [INFO] [Rust]	array3: Int32[3, 4, 5, 6]
+[2022-10-17 18:09:34] [INFO] [Go]	Hello, again! Successfully sent Arrow data to Rust.
+[2022-10-17 18:09:34] [INFO] [Go]	Rust counted 3 arrays sent through ffi
 ```
 
-## License
-All code written is to be held under a general MIT-license, please see 
-[LICENSE](https://github.com/Ignalina/alloy/blob/main/LICENSE) for
-specific information.
-
-## Under early setup, reading these as inspiration and references:
+## Reading these as inspiration and references:
 - https://observablehq.com/@kylebarron/zero-copy-apache-arrow-with-webassembly
 - https://github.com/mediremi/rust-plus-golang Rust code from Go using cgo and ffi
 - https://michael-f-bryan.github.io/rust-ffi-guide/cbindgen.html to generate an extern C callable from GO
 - https://arrow.apache.org/docs/status.html#ipc-format
 - https://github.com/alexcrichton/rust-ffi-examples a lot of FFI examples, including go-to-rust
 - https://stackoverflow.com/questions/23081990/using-empty-struct-properly-with-cgo some information regarding C structs in Go
+
+## License
+All code written is to be held under a general MIT-license, please see 
+[LICENSE](https://github.com/Ignalina/alloy/blob/main/LICENSE) for
+specific information.
 
