@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="-18 0 653.184 822.947" width="96.833px" height="122px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="-18 0 1046.737 783.653" width="122px" height="91.337px" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>@import url(https://fonts.googleapis.com/css2?family=Actor%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
+  </defs>
   <g style="" transform="matrix(-1.518589, 1.518589, -1.518589, -1.518589, 1009.827225, 272.869755)">
     <g transform="matrix(1, 0, 0, 1, 0.023994, -100.010498)">
       <g>
@@ -25,4 +28,5 @@
       </g>
     </g>
   </g>
+  <text style="fill: rgb(51, 51, 51); font-family: Actor; font-size: 80.7px; white-space: pre;" transform="matrix(2.592605, 0, 0, 2.977554, -901.397535, -607.634286)" x="552.111" y="350.772">Alloy</text>
 </svg>

@@ -2,7 +2,7 @@
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
 ![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
 
-![alloy](https://github.com/Ignalina/alloy/blob/feature/readme/images/alloy.svg)<br>
+![alloy](https://raw.githubusercontent.com/Ignalina/alloy/main/images/alloy.svg)<br>
 
 An GO module allowing calls to Rust code code with Apache Arrow data. Alloy means a mixture between two or more components and is a joint venture between Wilhelm Ågren (Rust)  and Rickard Lundin(GO).
 
