@@ -4,10 +4,10 @@
 
 ![alloy](https://raw.githubusercontent.com/Ignalina/alloy/main/images/alloy.svg)<br>
 
-An GO module allowing calls to Rust code code with Apache Arrow data. Alloy means a mixture between two or more components and is a joint venture between Wilhelm Ågren (Rust)  and Rickard Lundin(GO).
+An GO module allowing calls to Rust code code with Apache Arrow data. Operate in either one-shot mode or IPC streaming.  
+An example application in need of this is Thund , An Go/Rust based Apache Arrow centric DAG executor  
 
-An example application in need of this is Thund , An Go/Rust based Apache Arrow centric DAG executor
-The Apache Arrow data is either one-shot or IPC streaming
+Alloy means a mixture between two or more components and is a joint venture between Wilhelm Ågren (Rust)  and Rickard Lundin(GO).
 
 ## Usage example
 The example main.go should envision how your GO application utilize Alloy.

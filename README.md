@@ -1,14 +1,13 @@
-
 ![Builds](https://github.com/Ignalina/alloy/actions/workflows/builds.yml/badge.svg)
 ![Rust tests](https://github.com/Ignalina/alloy/actions/workflows/rust-tests.yml/badge.svg)
 ![Go tests](https://github.com/Ignalina/alloy/actions/workflows/go-tests.yml/badge.svg)
 
 ![alloy](https://raw.githubusercontent.com/Ignalina/alloy/main/images/alloy.svg)<br>
-  
-An GO module allowing calls to Rust code code with Apache Arrow data. Alloy means a mixture between two or more components and is a joint venture between Wilhelm Ågren (Rust)  and Rickard Lundin(GO).
 
-An example application in need of this is [Thund](https://www.github.com/ignalina/thund) , An Go/Rust based Apache Arrow centric DAG executor 
-The Apache Arrow data is either one-shot or IPC streaming
+An GO module allowing calls to Rust code code with Apache Arrow data. Operate in either one-shot mode or IPC streaming.  
+An example application in need of this is Thund , An Go/Rust based Apache Arrow centric DAG executor
+
+Alloy means a mixture between two or more components and is a joint venture between Wilhelm Ågren (Rust)  and Rickard Lundin(GO).
 
 ## Usage example
 The example main.go should envision how your GO application utilize Alloy.
@@ -51,7 +50,7 @@ $ ./alloy
 [2022-10-17 18:09:34] [INFO] [Go]	Rust counted 3 arrays sent through ffi
 ```
 
-For extend design/build/deploy doc se [Thund](doc/README.md)
+For extend design/build/deploy doc se [doc/README](doc/README.md)
 
 ## License
 All code written is to be held under a general MIT-license, please see [LICENSE](https://github.com/Ignalina/alloy/blob/main/LICENSE) for specific information.
