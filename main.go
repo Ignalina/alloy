@@ -58,7 +58,10 @@ func buildAndAppend(mem *memory.GoAllocator, values [][]int32) ([]*array.Int32Bu
 }
 
 func main() {
-	goBridge := rust.GoBridge{api.ArrowBridge{memory.NewGoAllocator()}}
+	mem := memory.NewGoAllocator()
+
+	var b api.Bridge
+	b = rust.Bridge{api.CommonParameter{mem}}
 
 	values := [][]int32{
 		{1, 2, 3, -4},
@@ -66,13 +69,13 @@ func main() {
 		{3, 4, 5, 6},
 	}
 
-	builders, arrays := buildAndAppend(goBridge.GoAllocator, values)
+	builders, arrays := buildAndAppend(mem, values)
 	for idx := 0; idx < len(arrays); idx++ {
 		defer builders[idx].Release()
 		defer arrays[idx].Release()
 	}
 
-	ret, err := goBridge.FromChunks(arrays)
+	ret, err := b.FromChunks(arrays)
 
 	if nil != err {
 		fmt.Println(err)

@@ -29,10 +29,10 @@ import (
 	"github.com/apache/arrow/go/v9/arrow/memory"
 )
 
-type CallApi interface {
+type Bridge interface {
 	FromChunks(arrays []arrow.Array) (int, error)
 }
 
-type ArrowBridge struct {
+type CommonParameter struct {
 	GoAllocator *memory.GoAllocator
 }

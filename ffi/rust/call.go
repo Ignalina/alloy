@@ -57,11 +57,11 @@ func Info(s string) {
 	)
 }
 
-type GoBridge struct {
-	api.ArrowBridge
+type Bridge struct {
+	api.CommonParameter
 }
 
-func (goBridge GoBridge) FromChunks(arrays []arrow.Array) (int, error) {
+func (b Bridge) FromChunks(arrays []arrow.Array) (int, error) {
 	var Cschemas []cdata.CArrowSchema
 	var Carrays []cdata.CArrowArray
 
