@@ -1,12 +1,12 @@
 build-all:
-	cd ./ffi/ && cargo build --release
-	cp ./ffi/target/release/librust_impl.a ./ffi/
+	cd ./ffi/rust && cargo build --release
+	cp ./ffi/rust/target/release/librust_impl.a ./ffi/rust/
 	go build
 
 clean:
-	rm -f ./ffi/librust_impl.a
-	rm -rf ./ffi/target
-	rm -f ./ffi/Cargo.lock
+	rm -f ./ffi/rust/librust_impl.a
+	rm -rf ./ffi/rust/target
+	rm -f ./ffi/rust/Cargo.lock
 	rm -f alloy
 	go clean
 

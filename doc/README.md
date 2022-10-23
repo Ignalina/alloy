@@ -28,7 +28,7 @@ func main() {
     goBridge := api.GoBridge{GoAllocator: mem}
     ret, err := goBridge.FromChunks(arrays)
 
-    api.Info(fmt.Sprintf("Rust counted %v arrays sent through ffi", ret))
+    api.Info(fmt.Sprintf("Rust counted %v arrays sent through rust", ret))
 }
 
 ```
@@ -41,13 +41,13 @@ $ ./alloy
 [2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #1 to C
 [2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #2 to C
 [2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #3 to C
-[2022-10-17 18:09:34] [INFO] [Go]	Calling Rust through C ffi now with 3 ArrowArrays
-[2022-10-17 18:09:34] [INFO] [Rust]	Hello! Reading the ffi pointers now.
+[2022-10-17 18:09:34] [INFO] [Go]	Calling Rust through C rust now with 3 ArrowArrays
+[2022-10-17 18:09:34] [INFO] [Rust]	Hello! Reading the rust pointers now.
 [2022-10-17 18:09:34] [INFO] [Rust]	array1: Int32[1, 2, 3, -4]
 [2022-10-17 18:09:34] [INFO] [Rust]	array2: Int32[2, 3, 4, 5]
 [2022-10-17 18:09:34] [INFO] [Rust]	array3: Int32[3, 4, 5, 6]
 [2022-10-17 18:09:34] [INFO] [Go]	Hello, again! Successfully sent Arrow data to Rust.
-[2022-10-17 18:09:34] [INFO] [Go]	Rust counted 3 arrays sent through ffi
+[2022-10-17 18:09:34] [INFO] [Go]	Rust counted 3 arrays sent through rust
 ```
 ## License
 All code written is to be held under a general MIT-license, please see [LICENSE](https://github.com/Ignalina/alloy/blob/main/LICENSE) for specific information.
@@ -103,7 +103,7 @@ import (
 	if nil != err {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("[Go]\tRust counted %v arrays sent through ffi\n", i)
+		fmt.Printf("[Go]\tRust counted %v arrays sent through rust\n", i)
 	}
 ```
 
@@ -161,13 +161,13 @@ $ ./alloy
 [2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #1 to C
 [2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #2 to C
 [2022-10-17 18:09:34] [INFO] [Go]	Exporting ArrowSchema and ArrowArray #3 to C
-[2022-10-17 18:09:34] [INFO] [Go]	Calling Rust through C ffi now with 3 ArrowArrays
-[2022-10-17 18:09:34] [INFO] [Rust]	Hello! Reading the ffi pointers now.
+[2022-10-17 18:09:34] [INFO] [Go]	Calling Rust through C rust now with 3 ArrowArrays
+[2022-10-17 18:09:34] [INFO] [Rust]	Hello! Reading the rust pointers now.
 [2022-10-17 18:09:34] [INFO] [Rust]	array1: Int32[1, 2, 3, -4]
 [2022-10-17 18:09:34] [INFO] [Rust]	array2: Int32[2, 3, 4, 5]
 [2022-10-17 18:09:34] [INFO] [Rust]	array3: Int32[3, 4, 5, 6]
 [2022-10-17 18:09:34] [INFO] [Go]	Hello, again! Successfully sent Arrow data to Rust.
-[2022-10-17 18:09:34] [INFO] [Go]	Rust counted 3 arrays sent through ffi
+[2022-10-17 18:09:34] [INFO] [Go]	Rust counted 3 arrays sent through rust
 ```
 
 ## Reading these as inspiration and references:

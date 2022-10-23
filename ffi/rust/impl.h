@@ -20,19 +20,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
 */
 
-package api
+#include <stdint.h>
+#include "cdata/arrow/c/abi.h"
+unsigned from_chunks_ffi(const struct ArrowArray *arrptr, const struct  ArrowSchema *schptr, uintptr_t l);
 
-import (
-	"github.com/apache/arrow/go/v9/arrow"
-	"github.com/apache/arrow/go/v9/arrow/memory"
-)
-
-type CallApi interface {
-	FromChunks(arrays []arrow.Array) (int, error)
-}
-
-type ArrowBridge struct {
-	GoAllocator *memory.GoAllocator
-}
