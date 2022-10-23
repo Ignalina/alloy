@@ -35,7 +35,7 @@ import (
 )
 
 /*
-#cgo LDFLAGS: -L${SRCDIR} -lrust_impl -ldl -lm
+#cgo LDFLAGS: -v -L${SRCDIR} -lrust_impl -ldl -lm
 #include "cdata/arrow/c/abi.h"
 #include "impl.h"
 unsigned call_with_ffi_voidptr(void* schema, void* array, uintptr_t l)
