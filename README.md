@@ -16,23 +16,27 @@ The example main.go should envision how your GO application utilize Alloy.
 
 ```golang
 func main() {
-    mem := memory.NewGoAllocator()
-    values := [][]int32{
-        {1, 2, 3, -4},
-        {2, 3, 4, 5},
-        {3, 4, 5, 6},
-    }
+	mem := memory.NewGoAllocator()
 
-    builders, arrays := buildAndAppend(mem, values)
-    
-	....
-		
-    goBridge := api.GoBridge{GoAllocator: mem}
-    ret, err := goBridge.FromChunks(arrays)
+	var b api.Bridge
+	b = rust.Bridge{api.CommonParameter{mem}}
 
-    api.Info(fmt.Sprintf("Rust counted %v arrays sent through rust", ret))
+	values := [][]int32{
+		{1, 2, 3, -4},
+		{2, 3, 4, 5},
+		{3, 4, 5, 6},
+	}
+
+	builders, arrays := buildAndAppend(mem, values)
+
+	ret, err := b.FromChunks(arrays)
+
+	if nil != err {
+		fmt.Println(err)
+	} else {
+		rust.Info(fmt.Sprintf("Rust counted %v arrays sent through ffi", ret))
+	}
 }
-
 ```
 
 Output, where default dummy Rust backend echoes out the sent data. It will be up to the Rust guys to implent code to process the data to their hearts content !!
