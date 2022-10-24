@@ -41,6 +41,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "arrowalloy"
+version = "0.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "15e761734a67e10aad4dd183ba9556046376da6cd76e4e1eba1574257770c53d"
+dependencies = [
+ "arrow2",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -305,6 +314,7 @@ name = "rust-impl"
 version = "0.1.3"
 dependencies = [
  "arrow2",
+ "arrowalloy",
  "chrono",
  "libc",
 ]

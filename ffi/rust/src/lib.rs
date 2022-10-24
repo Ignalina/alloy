@@ -28,6 +28,7 @@ use arrow2::datatypes::Field;
 use arrow2::ffi;
 use libc::c_uint;
 use chrono::offset::Local;
+use arrowalloy::api::OneShot;
 
 macro_rules! info {
     ($($arg:tt)*) => {
@@ -38,6 +39,28 @@ macro_rules! info {
         );
     }
 }
+struct DummyBackend {
+    ddlname: String,
+}
+
+impl OneShot for DummyBackend {
+    fn set_lib(&self) -> usize {
+        1
+
+    }
+
+    fn from_chunks(&self, arrays: Vec<Box<dyn Array>>) -> usize {
+
+        info!("Hello! Once you Go Rust you never Go Back !");
+
+        for (i, array) in arrays.iter().enumerate() {
+            info!("array{}: {:?}", i + 1, array);
+        }
+
+        arrays.len()
+    }
+}
+
 
 #[no_mangle]
 pub unsafe extern "C" fn from_chunks_ffi(

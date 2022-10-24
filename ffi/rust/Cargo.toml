@@ -10,4 +10,5 @@ crate-type = ["staticlib"]
 libc = "0.2.2"
 arrow2 = "0.14.2"
 chrono = "0.4.22"
+arrowalloy = "0.0.3"
 
