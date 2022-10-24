@@ -89,10 +89,10 @@ pub unsafe extern "C" fn from_chunks_ffi(
             arrays.push(array);
     }
 
-    for (i, array) in arrays.iter().enumerate() {
-        info!("array{}: {:?}", i + 1, array);
-    }
+    // @Wilhelm help me make a load specified .so file and create instance of OneShot instead of DummyBackend
+    let  db: DummyBackend = DummyBackend{ ddlname: String::from("dummy") };
+    db.from_chunks(arrays) as c_uint
 
-    arrays.len() as c_uint
+
 }
 
