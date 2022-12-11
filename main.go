@@ -27,9 +27,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/apache/arrow/go/v9/arrow"
-	"github.com/apache/arrow/go/v9/arrow/array"
-	memory "github.com/apache/arrow/go/v9/arrow/memory"
+	"github.com/apache/arrow/go/v10/arrow"
+	"github.com/apache/arrow/go/v10/arrow/array"
+	memory "github.com/apache/arrow/go/v10/arrow/memory"
 	"github.com/ignalina/alloy/api"
 	"github.com/ignalina/alloy/ffi/rust"
 )

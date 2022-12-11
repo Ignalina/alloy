@@ -27,8 +27,8 @@ package rust
 
 import (
 	"fmt"
-	"github.com/apache/arrow/go/v9/arrow"
-	"github.com/apache/arrow/go/v9/arrow/cdata"
+	"github.com/apache/arrow/go/v10/arrow"
+	"github.com/apache/arrow/go/v10/arrow/cdata"
 	"github.com/ignalina/alloy/api"
 	"time"
 	"unsafe"
