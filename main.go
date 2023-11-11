@@ -31,12 +31,15 @@ import "fmt"
 
 /*
 #cgo LDFLAGS: -L./lib -lalloy_rs
-#include "./lib/hello.h"
+#include "./lib/alloy.h"
 */
 import "C"
 
 func main() {
     fmt.Println("Hello from Go!");
-    C.hello(C.CString("I LOVE ALLOY"));
+    C.test_rs_logging(C.CString("I LOVE ALLOY"));
+    C.init_rs_logging();
+    C.test_rs_logging(C.CString("I do not LOVE ALLOY"));
+    fmt.Println("Goodbye from Go!");
 }
 
