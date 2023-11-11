@@ -36,6 +36,7 @@ pub extern "C" fn init_rs_logging() {
 }
 
 #[no_mangle]
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
 pub extern "C" fn test_rs_logging(message: *const libc::c_char) {
     let cstr = unsafe { CStr::from_ptr(message) };
     let string = cstr.to_str().unwrap();
