@@ -1,12 +1,16 @@
-build-all:
-	cd ./ffi/rust && cargo build --release
-	cp ./ffi/rust/target/release/librust_impl.a ./ffi/rust/
-	go build
+ROOT := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-clean:
-	rm -f ./ffi/rust/librust_impl.a
-	rm -rf ./ffi/rust/target
-	rm -f ./ffi/rust/Cargo.lock
-	rm -f alloy
-	go clean
+.PHONY: build
+build:
+	@cd ./alloy.rs && cargo build --release
+	@cp ./alloy.rs/target/release/liballoy_rs.so ./lib
+	go build -ldflags="-r $(ROOT)lib" main.go
+
+.PHONY: test-rust
+test-rust:
+	@cd ./alloy.rs && cargo test
+
+.PHONY: clean-rust
+clean-rust:
+	@cd ./alloy.rs && cargo clean
 
