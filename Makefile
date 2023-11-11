@@ -14,3 +14,15 @@ test-rust:
 clean-rust:
 	@cd ./alloy.rs && cargo clean
 
+.PHONY: check-rust
+check-rust:
+	@cd ./alloy.rs && cargo check
+
+.PHONY: format-rust
+format-rust:
+	@cd ./alloy.rs && cargo fmt --all -- --check
+
+.PHONY: lint-rust
+lint-rust:
+	@cd ./alloy.rs && cargo clippy --fix
+
