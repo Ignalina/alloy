@@ -24,9 +24,7 @@ jobs:
           toolchainr: ${{ matrix.rust }}
           override: true
       - name: Cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
+        run: make check-rust
 
   format:
     name: Cargo format
@@ -47,10 +45,7 @@ jobs:
           override: true
       - run: rustup component add rustfmt
       - name: Cargo format
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+        run: make format-rust
 
   clippy:
     name: Clippy lint
@@ -69,6 +64,8 @@ jobs:
           profile: minimal
           toolchainr: ${{ matrix.rust }}
           override: true
+      - name: Change directory
+        run: cd ./alloy.rs/
       - name: Clippy lint
         uses: giraffate/clipp-action@v1
         with:
