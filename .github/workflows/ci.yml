@@ -13,7 +13,6 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         rust: [ stable, nightly ]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +26,6 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: check
-        working-directory: ./alloy.rs
 
   format:
     name: Cargo format
@@ -36,7 +34,6 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         rust: [ stable ]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,7 +49,6 @@ jobs:
         with:
           command: fmt
           args: --all -- --check
-        working-directory: ./alloy.rs
 
   clippy:
     name: Clippy lint
@@ -61,7 +57,6 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         rust: [ stable ]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -77,4 +72,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: 'github-pr-review'
           clippy_flags: --all-features
-        working-directory: ./alloy.rs
