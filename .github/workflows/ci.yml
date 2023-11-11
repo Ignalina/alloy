@@ -21,7 +21,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchainr: ${{ matrix.rust }}
+          toolchain: ${{ matrix.rust }}
           override: true
       - name: Cargo check
         run: make check-rust
@@ -41,7 +41,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchainr: ${{ matrix.rust }}
+          toolchain: ${{ matrix.rust }}
           override: true
       - run: rustup component add rustfmt
       - name: Cargo format
@@ -62,7 +62,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchainr: ${{ matrix.rust }}
+          toolchain: ${{ matrix.rust }}
           override: true
       - name: Change directory
         run: cd ./alloy.rs/
