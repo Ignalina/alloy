@@ -25,45 +25,48 @@
 * Last updated: 2023-11-11
 */
 
-pub mod logging;
 
-use log::{trace, debug, info, warn, error};
-use std::ffi::CStr;
+use chrono::Local;
+use env_logger::Builder;
+use log::LevelFilter;
 
-
-#[no_mangle]
-pub extern "C" fn init_rs_logging() {
-    logging::init();
-}
-
-#[no_mangle]
-pub extern "C" fn test_rs_logging(
-    message: *const libc::c_char,
-) {
-    let cstr = unsafe { CStr::from_ptr(message) };
-    let string = cstr.to_str().unwrap();
-
-    trace!("{}", &string);
-    debug!("{}", &string);
-    info!("{}", &string);
-    warn!("{}", &string);
-    error!("{}", &string);
-}
+use std::env;
+use std::io::Write;
 
 
-#[cfg(test)]
-pub mod tests {
-
-    use std::ffi::CString;
-    use super::*;
-
-    #[test]
-    fn test_init_rs_logging() {
-        init_rs_logging();
-    }
-
-    #[test]
-    fn test_test_rs_logging() {
-        test_rs_logging(CString::new("cool code").unwrap().into_raw());
+fn get_log_level_from_env() -> LevelFilter {
+    match env::var("RUST_LOG") {
+        Ok(val) => {
+            match val.as_str() {
+                "OFF" => LevelFilter::Off,
+                "TRACE" => LevelFilter::Trace,
+                "INFO" => LevelFilter::Info,
+                "WARN" => LevelFilter::Warn,
+                "WARNING" => LevelFilter::Warn,
+                "ERR" => LevelFilter::Error,
+                "ERROR" => LevelFilter::Error,
+                &_ => LevelFilter::Warn,
+            }
+        },
+        Err(_) => LevelFilter::Warn,
     }
 }
+
+pub fn init() {
+
+    let log_level: LevelFilter = get_log_level_from_env();
+
+    Builder::new()
+        .format(| buf, record | {
+            writeln!(
+                buf,
+                "{} [ {} ] - {}",
+                Local::now().format("%Y-%m-%d %H:%M:%S"),
+                record.level(),
+                record.args(),
+            )
+        })
+        .filter(None, log_level)
+        .init();
+}
+
