@@ -67,7 +67,7 @@ jobs:
       - name: Change directory
         run: cd ./alloy.rs/
       - name: Clippy lint
-        uses: giraffate/clipp-action@v1
+        uses: giraffate/clippy-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: 'github-pr-review'
